@@ -1,0 +1,14 @@
+<ul class="nav nav-pills mt-4 mb-4">
+    <li class="nav-item"><a class="nav-link admin-pill <%= active === 'dashboard' ? 'active' : '' %>" href="/admin">Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link admin-pill <%= active === 'listings' ? 'active' : '' %>" href="/admin/listings">Listings</a></li>
+    <li class="nav-item"><a class="nav-link admin-pill <%= active === 'users' ? 'active' : '' %>" href="/admin/users">Users</a></li>
+    <li class="nav-item"><a class="nav-link admin-pill <%= active === 'reviews' ? 'active' : '' %>" href="/admin/reviews">Reviews</a></li>
+</ul>
+<style>
+    .admin-pill{ color:#222 !important; }
+    .admin-pill.active{ background-color:#fe424d !important; color:#fff !important; }
+    .admin-table img{ width:64px; height:44px; object-fit:cover; border-radius:.5rem; }
+    .admin-table td{ vertical-align:middle; }
+    .stat-card{ border:1px solid #ebebeb; border-radius:1rem; padding:1.25rem; text-align:center; }
+    .stat-card h2{ margin:0; color:#fe424d; }
+</style>

@@ -1,0 +1,36 @@
+<% layout("/layouts/boilerplate") -%>
+<h2 class="mt-4">Admin Panel</h2>
+<%- include("../includes/adminNav.ejs", { active: "dashboard" }) %>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3"><a href="/admin/users" class="text-decoration-none text-dark"><div class="stat-card"><h2><%= userCount %></h2>Users (<%= adminCount %> admin)</div></a></div>
+    <div class="col-6 col-md-3"><a href="/admin/listings" class="text-decoration-none text-dark"><div class="stat-card"><h2><%= listingCount %></h2>Listings</div></a></div>
+    <div class="col-6 col-md-3"><a href="/admin/reviews" class="text-decoration-none text-dark"><div class="stat-card"><h2><%= reviewCount %></h2>Reviews</div></a></div>
+    <div class="col-6 col-md-3"><a href="/listings/new" class="text-decoration-none text-dark"><div class="stat-card"><h2>+</h2>New listing</div></a></div>
+</div>
+
+<div class="row">
+    <div class="col-md-7">
+        <h5>Latest listings</h5>
+        <table class="table admin-table">
+            <% recentListings.forEach(l => { %>
+            <tr>
+                <td><img src="<%= l.image && l.image.url %>" alt=""></td>
+                <td><a href="/listings/<%= l._id %>"><%= l.title %></a><br><small class="text-muted"><%= l.location %>, <%= l.country %></small></td>
+                <td><%= l.owner ? l.owner.username : "—" %></td>
+            </tr>
+            <% }) %>
+        </table>
+    </div>
+    <div class="col-md-5">
+        <h5>Newest users</h5>
+        <table class="table admin-table">
+            <% recentUsers.forEach(u => { %>
+            <tr>
+                <td><%= u.username %> <% if(u.isAdmin){ %><span class="badge text-bg-danger">admin</span><% } %></td>
+                <td><small class="text-muted"><%= u.email %></small></td>
+            </tr>
+            <% }) %>
+        </table>
+    </div>
+</div>

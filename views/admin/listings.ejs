@@ -1,0 +1,32 @@
+<% layout("/layouts/boilerplate") -%>
+<h2 class="mt-4">Admin Panel</h2>
+<%- include("../includes/adminNav.ejs", { active: "listings" }) %>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h5 class="mb-0">All listings (<%= listings.length %>)</h5>
+    <a href="/listings/new" class="btn btn-sm btn-dark add-btn">Add listing</a>
+</div>
+<div class="table-responsive">
+<table class="table admin-table">
+    <thead><tr><th></th><th>Title</th><th>Location</th><th>Price</th><th>Owner</th><th>Reviews</th><th></th></tr></thead>
+    <tbody>
+    <% listings.forEach(l => { %>
+        <tr>
+            <td><img src="<%= l.image && l.image.url %>" alt=""></td>
+            <td><a href="/listings/<%= l._id %>"><%= l.title %></a></td>
+            <td><%= l.location %>, <%= l.country %></td>
+            <td>&#8377; <%= (l.price || 0).toLocaleString("en-IN") %></td>
+            <td><%= l.owner ? l.owner.username : "—" %></td>
+            <td><%= l.reviews.length %></td>
+            <td class="text-end text-nowrap">
+                <a href="/listings/<%= l._id %>/edit" class="btn btn-sm btn-outline-dark">Edit</a>
+                <form class="d-inline" method="POST" action="/admin/listings/<%= l._id %>?_method=DELETE"
+                      onsubmit="return confirm('Delete this listing and all its reviews?')">
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
+</div>

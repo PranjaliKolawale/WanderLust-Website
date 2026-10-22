@@ -21,6 +21,7 @@ const User = require("./models/user.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const adminRouter = require("./routes/admin.js");
 const MongoStore = require('connect-mongo');
 
 // const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
@@ -66,7 +67,8 @@ const sessionOptions = {
     cookie: {
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true
+        httpOnly: true,
+        sameSite: "lax"
     }
 };
 
@@ -104,6 +106,7 @@ app.use((req, res, next) => {
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
+app.use("/admin", adminRouter);
 app.use("/", userRouter);
 
 

@@ -23,9 +23,24 @@ module.exports.saveRedirectUrl = (req, res, next) => {
     next();
 }
 
+module.exports.isAdmin = (req, res, next) => {
+    if(!req.user || !req.user.isAdmin){
+        req.flash("error", "You don't have permission to access that page.");
+        return res.redirect("/listings");
+    }
+    next();
+};
+
 module.exports.isOwner = async(req, res, next) => {
     let {id} = req.params;
     let listing = await Listing.findById(id);
+    if(!listing){
+        req.flash("error", "Listing you requested for does not exist!");
+        return res.redirect("/listings");
+    }
+    if(res.locals.currUser.isAdmin){
+        return next();
+    }
     if(!listing.owner.equals(res.locals.currUser._id)){
         req.flash("error", "You are not the owner of this listing");
         return res.redirect(`/listings/${id}`);
@@ -60,6 +75,9 @@ module.exports.validateReview = (req, res, next) => {
 module.exports.isReviewAuthor = async(req, res, next) => {
     let { id, reviewId } = req.params;
     let review = await Review.findById(reviewId);
+    if(res.locals.currUser.isAdmin){
+        return next();
+    }
     if(!review.author.equals(res.locals.currUser._id)){
         req.flash("error", "You are not the author of this review");
         return res.redirect(`/listings/${id}`);

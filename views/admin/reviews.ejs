@@ -1,0 +1,26 @@
+<% layout("/layouts/boilerplate") -%>
+<h2 class="mt-4">Admin Panel</h2>
+<%- include("../includes/adminNav.ejs", { active: "reviews" }) %>
+
+<h5>All reviews (<%= rows.length %>)</h5>
+<div class="table-responsive">
+<table class="table admin-table">
+    <thead><tr><th>Listing</th><th>Author</th><th>Rating</th><th>Comment</th><th></th></tr></thead>
+    <tbody>
+    <% rows.forEach(({ review, listing }) => { %>
+        <tr>
+            <td><a href="/listings/<%= listing._id %>"><%= listing.title %></a></td>
+            <td><%= review.author ? review.author.username : "—" %></td>
+            <td><%= review.rating %>/5</td>
+            <td><%= review.comment %></td>
+            <td class="text-end">
+                <form method="POST" action="/admin/reviews/<%= review._id %>?_method=DELETE"
+                      onsubmit="return confirm('Delete this review?')">
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
+</div>
