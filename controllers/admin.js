@@ -19,8 +19,27 @@ module.exports.dashboard = async (req, res) => {
 
 /* ---------- Listings ---------- */
 module.exports.listings = async (req, res) => {
-    const listings = await Listing.find({}).sort({ _id: -1 }).populate("owner");
-    res.render("admin/listings.ejs", { listings });
+    const page = Math.max(
+        1,
+        parseInt(req.query.page, 10) || 1
+    );
+    const limit = 10;
+
+    const [listings, total] = await Promise.all([
+        Listing.find({})
+            .sort({ _id: -1 })
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .populate("owner"),
+
+        Listing.countDocuments()
+    ]);
+
+    res.render("admin/listings.ejs", {
+        listings,
+        page,
+        totalPages: Math.ceil(total / limit)
+    });
 };
 
 module.exports.destroyListing = async (req, res) => {
