@@ -6,9 +6,4 @@
   "routes": [
     { "src": "/(.*)", "dest": "/api/index.js" }
   ],
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "views/**,public/**"
-    }
-  }
 }
