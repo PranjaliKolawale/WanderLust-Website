@@ -18,7 +18,7 @@ A travel accommodation web application where users can create, view, edit, and d
 **Architecture:** MVC  
 
 ### Link for the project
-https://wanderlust-travel-ny7m.onrender.com/listings
+https://wander-lust-website-livid.vercel.app/listings
 
 ### Look of the Website
 ![Capture 1](https://github.com/user-attachments/assets/f9d72af0-a1f8-424a-81e6-1dec530859e9)
