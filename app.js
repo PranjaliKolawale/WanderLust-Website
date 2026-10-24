@@ -45,13 +45,13 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-const store = MongoStore.create({
-    mongoUrl: db_URL,
-    crypto: {
-        secret: process.env.SESSION_ENCRYPTION_SECRET
-    },
-    touchAfter: 24 * 3600
-});
+const store = MongoStore.create({ 
+    mongoUrl: db_URL, 
+    crypto: { 
+        secret: "mysupersecretcode" 
+    }, 
+    touchAfter: 24*3600 
+}); 
 
 
 store.on("error", (err)=>{ 
@@ -60,15 +60,13 @@ store.on("error", (err)=>{
 
 
 const sessionOptions = {
-    store,
-    secret: process.env.SESSION_SECRET,
+    secret: "mysupersecretcode",
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production"
+        httpOnly: true
     }
 };
 
