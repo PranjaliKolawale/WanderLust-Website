@@ -60,6 +60,8 @@ store.on("error", (err)=>{
 
 
 const sessionOptions = {
+    store: store,
+    secret: process.env.SESSION_SECRET,
     secret: "mysupersecretcode",
     resave: false,
     saveUninitialized: true,
